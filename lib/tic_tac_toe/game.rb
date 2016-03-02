@@ -17,6 +17,7 @@ module TicTacToe
 		def get_prefs
 			welcome
 			get_num_of_players
+			get_player_info
 		end
 
 		def welcome
@@ -30,7 +31,7 @@ module TicTacToe
       		num
     	end
 
-    	def get_name_of_players	
+    	def get_player_info	
 	      begin
 	        print "\nPlayer 1\n\tname: "
 	        p1_name = gets.strip
@@ -58,6 +59,39 @@ module TicTacToe
 	      # rescue StandardError => e
 	      # 	puts e.message
 	      # retry
-    	end
+		  else
+		  	begin 
+		  		print "Player 2 \n\tname: "
+		  		p2_name = gets.strip
+		      #   fail DuplicateError if p2_name == p1_name 
+		      #   fail EmptyStringError if p1_name == ''
+		      # rescue StandardError => e
+		      #   puts e.message
+		        retry
+	    	end
+	    	begin 
+	    		print "\n\tmarker: "
+	    		p2_marker = gets.strip
+	    		fail DuplicateError if p2_marker == p1_marker
+	    		fail EmptyStringError if p2_marker.strip == ''
+	    		fail MaxLengthError if p2_marker.strip > 1
+	    		rescue StandardError => e
+	    		puts e.message
+	    		retry 
+	    	end
+	    	@player_2 = Player.new(p2_name, p2_marker)
+	    end
+	  end
+
+	  def play
+	  	puts "#{@player_1.name} vs #{@player_2.name}"
+
+	  	current
+	  end
+
+	  def switch!
+	  	current_player, other_player = other_player, current_player
+	  end
+
 	end
 end

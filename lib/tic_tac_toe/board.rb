@@ -2,7 +2,7 @@ module TicTacToe
 	class Board
 		attr_accessor :cell
 		attr_reader :grid
-		
+
 		def initialize(input={})
 			@grid = input.fetch(:grid, default_grid)
 			@cell = cell
@@ -22,7 +22,7 @@ module TicTacToe
 			false
 		end
 
-		def formatted_grid
+		def draw
 			grid.each do |row|
 				puts row.map { |cell| cell.value.empty? ? Cell.new : cell.value }.join(" ")
 			end
@@ -33,7 +33,7 @@ module TicTacToe
 			Array.new(3) { Array.new(3) { Cell.new } }
 		end
 
-		def draw?
+		def tie?
 			grid.flatten.map.select { |cell| cell == nil }.count == 0
 		end
 
