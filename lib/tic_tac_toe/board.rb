@@ -1,8 +1,11 @@
 module TicTacToe
 	class Board
+		attr_accessor :cell
 		attr_reader :grid
+		
 		def initialize(input={})
 			@grid = input.fetch(:grid, default_grid)
+			@cell = cell
 		end
 
 		def get_cell(x,y)
@@ -21,7 +24,7 @@ module TicTacToe
 
 		def formatted_grid
 			grid.each do |row|
-				puts row.map { |cell| cell.value.empty? ? "_" : cell.value }.join(" ")
+				puts row.map { |cell| cell.value.empty? ? Cell.new : cell.value }.join(" ")
 			end
 		end
 
@@ -47,22 +50,22 @@ module TicTacToe
 		end
 
 		def winning_position_values(winning_position)
-      winning_position.map { |cell| cell.value }
-    end
+      		winning_position.map { |cell| cell.value }
+    	end
 
-    def winning_positions
-      grid + # rows
-      grid.transpose + # columns
-      diagonals # two diagonals
-    end
+	    def winning_positions
+	      grid + # rows
+	      grid.transpose + # columns
+	      diagonals # two diagonals
+	    end
 
-    def diagonals
-      [
-        [get_cell(0, 0), get_cell(1, 1), get_cell(2, 2)],
-        [get_cell(0, 2), get_cell(1, 1), get_cell(2, 0)]
-      ]
-    end
+	    def diagonals
+	      [
+	        [get_cell(0, 0), get_cell(1, 1), get_cell(2, 2)],
+	        [get_cell(0, 2), get_cell(1, 1), get_cell(2, 0)]
+	      ]
+	    end
 
-  end
+  	end
 
 end
