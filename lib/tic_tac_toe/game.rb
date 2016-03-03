@@ -83,15 +83,33 @@ module TicTacToe
 	    end
 	  end
 
-	  def play
-	  	puts "#{@player_1.name} vs #{@player_2.name}"
+	  def get_who_goes_first
+	  	"Who goes first? Press 1 for #{@player_1.name} or press 2 for #{@player_2.name}"
+	  	 #if user enters 1 then current player is player_1, else current player is player_2
+	  	 first = gets.chomp
+ 			if first == '1'
+		  	current_player = @player_1
+		  	other_player = @player_2
+		  elsif first == '2'
+		  	current_player = @player_2
+		  	other_player = @player_1
+		  else
+		  	puts "please enter 1 or 2"
+	  end
 
-	  	current
+	  def play
+	  	puts "#{@player_1.name} vs #{@player_2.name}" 
+	  	get_who_goes_first
 	  end
 
 	  def switch!
 	  	current_player, other_player = other_player, current_player
 	  end
+
+	  def over?
+	  	# true if there is a tie or no cells empty or num_marks == baord.grid.cells.length 
+	  	# return true if @board.grid.all?(marks)
+	  	return false if @board.flatten.include?('')
 
 	end
 end
