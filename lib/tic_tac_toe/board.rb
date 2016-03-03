@@ -4,15 +4,24 @@ module TicTacToe
 
 		def initialize(input={})
 			@grid = input.fetch(:grid, default_grid)
-			@cell = cell
+			# @cell = cell
 		end
 
 		def get_cell(x,y)
-			grid[y][x]
+			cell = grid[y][x]
 		end
 
-		def set_cell(x,y, val)
+		def set_cell(x,y,val)
+			# cell.value = val
 			get_cell(x,y).value = val
+		end
+
+		def moves
+			grid.compact.count
+		end
+
+		def mark_board(cell, piece)
+			grid[cell] = piece
 		end
 
 		def game_over
@@ -46,25 +55,24 @@ module TicTacToe
 			false
 		end
 
-		end
+		
 
 		def winning_position_values(winning_position)
       		winning_position.map { |cell| cell.value }
     	end
 
-	    def winning_positions
-	      grid + # rows
-	      grid.transpose + # columns
-	      diagonals # two diagonals
-	    end
+    def winning_positions
+      grid + # rows
+      grid.transpose + # columns
+      diagonals # two diagonals
+    end
 
-	    def diagonals
-	      [
-	        [get_cell(0, 0), get_cell(1, 1), get_cell(2, 2)],
-	        [get_cell(0, 2), get_cell(1, 1), get_cell(2, 0)]
-	      ]
-	    end
-
-  	end
+    def diagonals
+      [
+        [get_cell(0, 0), get_cell(1, 1), get_cell(2, 2)],
+        [get_cell(0, 2), get_cell(1, 1), get_cell(2, 0)]
+      ]
+    end
+  end
 
 end

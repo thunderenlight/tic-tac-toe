@@ -9,9 +9,9 @@ module TicTacToe
 	class Game
 		attr_reader :player_1, :player_2
 
-		def initialize(grid)
+		def initialize
 			get_prefs
-			
+			@board = Board.new(grid = nil)		
 		end
 
 		def get_prefs
@@ -38,7 +38,7 @@ module TicTacToe
 	      #   fail EmptyStringError if p1_name == ''
 	      # rescue StandardError => e
 	      #   puts e.message
-	        retry
+	        # retry
 	      end
 	      begin
 	        print "\n\tmarker: "
@@ -47,7 +47,7 @@ module TicTacToe
 	      #   fail MaxLengthError if p1_marker.length > 1
 	      # rescue StandardError => e
 	      #   puts e.message
-	        retry
+	        # retry
 	      end
 	      @player_1 = Player.new(p1_name, p1_marker)
 	      if get_num_of_players  == 1
@@ -67,7 +67,7 @@ module TicTacToe
 		      #   fail EmptyStringError if p1_name == ''
 		      # rescue StandardError => e
 		      #   puts e.message
-		        retry
+		        # retry
 	    	end
 	    	begin 
 	    		print "\n\tmarker: "
@@ -100,6 +100,12 @@ module TicTacToe
 	  def play
 	  	puts "#{@player_1.name} vs #{@player_2.name}" 
 	  	get_who_goes_first
+	  	until over?
+	  		@board.draw
+	        # if current_player.is_a? NonHumanPlayer
+	        # 	@board.mark
+	        player.move
+
 	  end
 
 	  def switch!
@@ -110,6 +116,14 @@ module TicTacToe
 	  	# true if there is a tie or no cells empty or num_marks == baord.grid.cells.length 
 	  	# return true if @board.grid.all?(marks)
 	  	return false if @board.flatten.include?('')
+	  	end
+		end
+		def get_move
+		  print "Where would you lke to move #{current_player.name} ? : "
+      gets.chomp
+      end
+		end
+
 
 	end
 end
