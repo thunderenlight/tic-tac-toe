@@ -35,39 +35,44 @@ module TicTacToe
 	      begin
 	        print "\nPlayer 1\n\tname: "
 	        p1_name = gets.strip
-	      #   fail EmptyStringError if p1_name == ''
-	      # rescue StandardError => e
-	      #   puts e.message
-	        # retry
+	        fail EmptyStringError if p1_name == ''
+	      rescue StandardError => e
+	        puts e.message
+	      	retry
 	      end
 	      begin
 	        print "\n\tmarker: "
 	        p1_marker = gets.strip
-	      #   fail EmptyStringError if p1_marker == ''
-	      #   fail MaxLengthError if p1_marker.length > 1
-	      # rescue StandardError => e
-	      #   puts e.message
-	        # retry
+	        fail EmptyStringError if p1_marker == ''
+	        fail MaxLengthError if p1_marker.length > 1
+		    rescue StandardError => e
+		        puts e.message
+		      retry
 	      end
 	      @player_1 = Player.new(p1_name, p1_marker)
+	      
+
 	      if get_num_of_players  == 1
-	      	c_name = 'computer'
-	      	print "#{c_name}:"
-	      	print "What marker would you like to assign to the computer?"
-	      	c_marker = gets.strip
-	      # 	fail DuplicateError if c_marker == p1_marker 
-	      # rescue StandardError => e
-	      # 	puts e.message
-	      # retry
+	      	begin
+		      	c_name = 'computer'
+		      	print "#{c_name}:"
+		      	print "What marker would you like to assign to the computer?"
+		      	c_marker = gets.strip
+		      	fail DuplicateError if c_marker == p1_marker
+		      	fail EmptyStringError if c_marker.strip == ''
+	        rescue StandardError => e
+	      		puts e.message
+	      		retry
+	    	end
 		  else
 		  	begin 
 		  		print "Player 2 \n\tname: "
 		  		p2_name = gets.strip
-		      #   fail DuplicateError if p2_name == p1_name 
-		      #   fail EmptyStringError if p1_name == ''
-		      # rescue StandardError => e
-		      #   puts e.message
-		        # retry
+		        fail DuplicateError if p2_name == p1_name 
+		        fail EmptyStringError if p1_name == ''
+		      rescue StandardError => e
+		        puts e.message
+		      retry
 	    	end
 	    	begin 
 	    		print "\n\tmarker: "
@@ -112,11 +117,10 @@ module TicTacToe
 	  	instructions
 	  	until over?
 	  		@board.draw
-		  	solicit_move
+		  	# solicit_move
 	        # if current_player.is_a? NonHumanPlayer
 	        # 	@board.mark
 	        player.move
-	        
 	      end
 	  end
 
@@ -136,9 +140,9 @@ module TicTacToe
 	  	gets.chomp
 		end
 
-		def get_move(solicit_move)
-			translate_move(solicit_move)
-		end
+		# def get_move(solicit_move)
+		# 	translate_move(solicit_move)
+		# end
 
 		def translate_move(human_move)
 	      mapping = {
