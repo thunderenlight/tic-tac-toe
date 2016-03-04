@@ -2,7 +2,7 @@ module TicTacToe
 	class Board
 		attr_accessor :cell, :grid
 
-		def initialize(input={})
+		def initialize(input={}, board = nil)
 			@grid = input.fetch(:grid, default_grid)
 			# @cell = cell
 		end
@@ -26,15 +26,29 @@ module TicTacToe
 
 		def game_over
 			return :winner if winner?
-			return :draw if draw?
+			return :tie if tie?
 			false
 		end
 
 		def draw
-			grid.each do |row|
-				puts row.map { |cell| cell.value.empty? ? Cell.new : cell.value }.join(" ")
-			end
+			# @grid.each do |row|
+			# 	puts row.map { |cell| cell.value.empty? ? Cell.new : cell.value }.join(" ")
+			# end
+			 # @grid.each do |row|
+    #     puts row.map { |cell| cell.value.empty? ? "_" : cell.value }.join(" ")
+    #   end
+    	@grid.each_with_index do |row, r_index|
+    		row.each_with_index do |cell, c_index|
+    			if r_index !=2
+    				print c_index == 2 ? "#{cell} \n" : "#{cell} |" 
+    			# else
+    			# 	print c_index == 2 ? "#{cell} \n" : "#{cell} |" 
+    			end
+    		end
+    		print "---+----+----\n" unless r_index ==2
+    	end
 		end
+
 
 		private
 		def default_grid
@@ -46,20 +60,18 @@ module TicTacToe
 		end
 
 		def winner?
-			winning_positions.each do |winning_position|
-				next if winning_places(winning_position).count == 0
-				return true if winning_places(winning_position).all? do |place|
-					place == self[0]
-					end
-				end
-			false
-		end
+			 winning_positions.each do |winning_position|
+        next if winning_position_values(winning_position).all_empty?
+        return true if winning_position_values(winning_position).all_same?
+      end
+      false
+    end
 
 		
 
 		def winning_position_values(winning_position)
       		winning_position.map { |cell| cell.value }
-    	end
+    end
 
     def winning_positions
       grid + # rows

@@ -7,7 +7,7 @@
 
 module TicTacToe
 	class Game
-		attr_reader :player_1, :player_2
+		attr_reader :player_1, :player_2, :board
 
 		def initialize
 			get_prefs
@@ -97,15 +97,27 @@ module TicTacToe
 		  	puts "please enter 1 or 2"
 	  end
 
-	  def play
+	  def instructions
+	      puts 'select a position to mark it as yours'
+	      puts ' 1 | 2 | 3 '
+	      puts '---+---+---'
+	      puts ' 4 | 5 | 6 '
+	      puts '---+---+---'
+	      puts ' 7 | 8 | 9 '
+    end
+
+  	def play
 	  	puts "#{@player_1.name} vs #{@player_2.name}" 
 	  	get_who_goes_first
+	  	instructions
 	  	until over?
 	  		@board.draw
+		  	solicit_move
 	        # if current_player.is_a? NonHumanPlayer
 	        # 	@board.mark
 	        player.move
-
+	        
+	      end
 	  end
 
 	  def switch!
@@ -118,12 +130,30 @@ module TicTacToe
 	  	return false if @board.flatten.include?('')
 	  	end
 		end
-		def get_move
-		  print "Where would you lke to move #{current_player.name} ? : "
-      gets.chomp
-      end
+
+		def solicit_move
+		  print "Where would you lke to move #{current_player.name} ? Enter a number between 1 and 9 to make your move: "
+	  	gets.chomp
 		end
 
+		def get_move(solicit_move)
+			translate_move(solicit_move)
+		end
+
+		def translate_move(human_move)
+	      mapping = {
+	        "1" => [0, 0],
+	        "2" => [1, 0],
+	        "3" => [2, 0],
+	        "4" => [0, 1],
+	        "5" => [1, 1],
+	        "6" => [2, 1],
+	        "7" => [0, 2],
+	        "8" => [1, 2],
+	        "9" => [2, 2]
+	      }
+	      mapping[human_move]
+	  end
 
 	end
 end
