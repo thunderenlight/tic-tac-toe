@@ -7,10 +7,9 @@
 
 module TicTacToe
 	class Game
-		attr_reader :player_1, :player_2, :board
+		attr_accessor :player_1, :player_2, :board
 
 		def initialize
-			get_prefs
 			@board = Board.new(grid = nil)		
 		end
 
@@ -21,8 +20,7 @@ module TicTacToe
 		end
 
 		def welcome
-		 puts 'Welcome to Command Line Games Tic Tac Toe!'
-         puts 'Two players choose a name and marker like: name Chris and marker is a X; and start playing.'
+		 print "Welcome to Command Line Games Tic Tac Toe! Two players choose a name and marker like: name Chris and marker is a X; and start playing."
     	end
 
     	def get_num_of_players
@@ -49,7 +47,7 @@ module TicTacToe
 		        puts e.message
 		      retry
 	      end
-	      @player_1 = Player.new(p1_name, p1_marker)
+	      player_1 = Player.new(p1_name, p1_marker)
 	      
 
 	      if get_num_of_players  == 1
@@ -84,12 +82,12 @@ module TicTacToe
 	    		puts e.message
 	    		retry 
 	    	end
-	    	@player_2 = Player.new(p2_name, p2_marker)
+	    	player_2 = Player.new(p2_name, p2_marker)
 	    end
 	  end
 
 	  def get_who_goes_first
-	  	"Who goes first? Press 1 for #{@player_1.name} or press 2 for #{@player_2.name}"
+	  	"Who goes first? Press 1 for #{player_1.name} or press 2 for #{player_2.name}"
 	  	 #if user enters 1 then current player is player_1, else current player is player_2
 	  	 first = gets.chomp
  			if first == '1'
@@ -112,7 +110,8 @@ module TicTacToe
     end
 
   	def play
-	  	puts "#{@player_1.name} vs #{@player_2.name}" 
+  		get_prefs
+	  	# puts "#{@player_1.name} vs #{@player_2.name}" 
 	  	get_who_goes_first
 	  	instructions
 	  	until over?
@@ -121,6 +120,7 @@ module TicTacToe
 	        # if current_player.is_a? NonHumanPlayer
 	        # 	@board.mark
 	        player.move
+	        game.switch!
 	      end
 	  end
 

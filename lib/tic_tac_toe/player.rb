@@ -1,8 +1,8 @@
 module TicTacToe
 	class Player
-		attr_reader :marker, :name
+		attr_reader :name, :marker
 		def initialize(input)
-			@mark = input.fetch(:marker)
+			@marker = input.fetch(:marker)
 			@name = input.fetch(:name)
 		end
 		def to_s

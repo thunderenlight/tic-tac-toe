@@ -20,8 +20,8 @@ module TicTacToe
 			grid.compact.count
 		end
 
-		def mark_board(cell, piece)
-			grid[cell] = piece
+		def mark_board(cell, marker)
+			grid[cell] = marker
 		end
 
 		def game_over
@@ -85,6 +85,13 @@ module TicTacToe
         [get_cell(0, 2), get_cell(1, 1), get_cell(2, 0)]
       ]
     end
+
+
+    def initialize_dup(other)
+      super(other)
+      @grid = other.grid.dup
+    end
+
   end
 
 end
