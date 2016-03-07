@@ -2,7 +2,7 @@ module TicTacToe
 	class Board
 		attr_accessor :cell, :grid
 
-		def initialize(input={}, board = nil)
+		def initialize(input={})
 			@grid = input.fetch(:grid, default_grid)
 			# @cell = cell
 		end
@@ -61,16 +61,16 @@ module TicTacToe
 
 		def winner?
 			 winning_positions.each do |winning_position|
-        next if winning_position_values(winning_position).all_empty?
-        return true if winning_position_values(winning_position).all_same?
-      end
+        	next if winning_position_values(winning_position).all_empty?
+        	return true if winning_position_values(winning_position).all_same?
+      	end
       false
     end
 
 		
 
-		def winning_position_values(winning_position)
-      		winning_position.map { |cell| cell.value }
+	def winning_position_values(winning_position)
+      	winning_position.map { |cell| cell.value }
     end
 
     def winning_positions

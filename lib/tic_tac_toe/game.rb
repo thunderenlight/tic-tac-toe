@@ -10,7 +10,7 @@ module TicTacToe
 		attr_accessor :player_1, :player_2, :board
 
 		def initialize
-			@board = Board.new(grid = nil)		
+			@board = Board.new		
 		end
 
 		def get_prefs
@@ -20,12 +20,12 @@ module TicTacToe
 		end
 
 		def welcome
-		 print "Welcome to Command Line Games Tic Tac Toe! Two players choose a name and marker like: name Chris and marker is a X; and start playing."
+		 puts "Welcome to Command Line Games Tic Tac ToeTwo players choose a name and marker like: name Chris and marker is a X; and start playing."
     	end
 
     	def get_num_of_players
     		puts 'Enter 1 for single player. 2 for two players.'
-      		num = gets.strip.to_i
+      		num = gets.strip
       		num
     	end
 
@@ -50,7 +50,7 @@ module TicTacToe
 	      player_1 = Player.new(p1_name, p1_marker)
 	      
 
-	      if get_num_of_players  == 1
+	      if get_num_of_players  <= 1
 	      	begin
 		      	c_name = 'computer'
 		      	print "#{c_name}:"
@@ -83,22 +83,23 @@ module TicTacToe
 	    		retry 
 	    	end
 	    	player_2 = Player.new(p2_name, p2_marker)
-	    end
+	    	end
 	  end
 
 	  def get_who_goes_first
-	  	"Who goes first? Press 1 for #{player_1.name} or press 2 for #{player_2.name}"
+	  	 puts "Who goes first? Press 1 for #{player_1.name} or press 2 for #{player_2.name}"
 	  	 #if user enters 1 then current player is player_1, else current player is player_2
-	  	 first = gets.chomp
+	  	 first = gets.strip
  			if first == '1'
-		  	current_player = @player_1
-		  	other_player = @player_2
+		  	current_player = player_1
+		  	other_player = player_2
 		  elsif first == '2'
-		  	current_player = @player_2
-		  	other_player = @player_1
+		  	current_player = player_2
+		  	other_player = player_1
 		  else
 		  	puts "please enter 1 or 2"
-	  end
+		  end
+		end
 
 	  def instructions
 	      puts 'select a position to mark it as yours'
@@ -111,12 +112,12 @@ module TicTacToe
 
   	def play
   		get_prefs
-	  	# puts "#{@player_1.name} vs #{@player_2.name}" 
+	  	puts "#{player_1.name} vs #{player_2.name}" 
 	  	get_who_goes_first
 	  	instructions
-	  	until over?
+	  	until tie?
 	  		@board.draw
-		  	# solicit_move
+		  	solicit_move
 	        # if current_player.is_a? NonHumanPlayer
 	        # 	@board.mark
 	        player.move
@@ -124,40 +125,39 @@ module TicTacToe
 	      end
 	  end
 
+	  def tie?
+	  	# true if there is a tie or no cells empty or num_marks == baord.grid.cells.length 
+	  	# return true if @board.grid.all?(marks)
+	  	return false if @board.flatten.include?('')
+	  end
 	  def switch!
 	  	current_player, other_player = other_player, current_player
 	  end
 
-	  def over?
-	  	# true if there is a tie or no cells empty or num_marks == baord.grid.cells.length 
-	  	# return true if @board.grid.all?(marks)
-	  	return false if @board.flatten.include?('')
-	  	end
-		end
 
-		def solicit_move
-		  print "Where would you lke to move #{current_player.name} ? Enter a number between 1 and 9 to make your move: "
-	  	gets.chomp
-		end
+	def solicit_move
+	  puts "Where would you lke to move #{player_1.name} ? Enter a number between 1 and 9 to make your move: "
+  	  # gets.chomp
+	end
 
 		# def get_move(solicit_move)
 		# 	translate_move(solicit_move)
 		# end
 
-		def translate_move(human_move)
-	      mapping = {
-	        "1" => [0, 0],
-	        "2" => [1, 0],
-	        "3" => [2, 0],
-	        "4" => [0, 1],
-	        "5" => [1, 1],
-	        "6" => [2, 1],
-	        "7" => [0, 2],
-	        "8" => [1, 2],
-	        "9" => [2, 2]
-	      }
-	      mapping[human_move]
-	  end
+	def translate_move(human_move)
+      mapping = {
+        "1" => [0, 0],
+        "2" => [1, 0],
+        "3" => [2, 0],
+        "4" => [0, 1],
+        "5" => [1, 1],
+        "6" => [2, 1],
+        "7" => [0, 2],
+        "8" => [1, 2],
+        "9" => [2, 2]
+      }
+      mapping[human_move]
+  end
 
-	end
+end
 end
